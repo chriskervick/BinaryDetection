@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH --partition=long
+
+
+
+
+#SBATCH -t 08:00:00        
+#SBATCH -N 1 --tasks-per-node=1           
+
+
+
+set echo
+set -x
+
+echo $bf
+echo $Ns
+echo $rundir
+echo $runnum
+
+which mpiexec
+which mpirun
+which mpicc
+which orted
+python --version
+
+#export PATH="/home/ckervick/anaconda3/bin/anaconda:$PATH"
+
+
+source /home/ckervick/anaconda3/bin/activate base
+
+ulimit -l unlimited
+#export I_MPI_PROCESS_MANAGER=mpd
+module load gcc-4.9.2
+#export LD_LIBRARY_PATH="/physics2/ckervick/MultiNest/lib:$LD_LIBRARY_PATH:$PATH"
+#module load intel-mpi-3.2.2
+module load opt-openmpi-300
+#source activate pmn
+which mpiexec
+which mpirun
+which mpicc
+which orted
+python --version
+
+
+python PLB_spatial.py $workdir $dir $bf $bg $rundir $runnum
+#srun -n24 python sepBatch.py $a $I0 $runnum 
+#mpirun -np 24 python sepBatch.py $a $I0 $runnum
+#python sepBatch.py
+
+
